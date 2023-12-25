@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <string>
 
 
 int score_of_done_tasks = 0;
@@ -13,8 +14,7 @@ void goNext() {
     
     std::cout << "\nTask №" << score_of_done_tasks << " is done, let's start №" << score_of_done_tasks+1 << "?\n";
     std::cout << "press ENTER to continue or write 'stop' to break process: ";
-    std::getline(std::cin, user_decision);
-    std::getline(std::cin, user_decision);
+    // std::getline(std::cin, user_decision);
     
     if (user_decision == "stop") {
         std::cout << "Really? Ok, let's finish, I don't want to see you for now...\n";
@@ -24,6 +24,19 @@ void goNext() {
     std::cout << "\n\n";
 }
 
+/**
+ Функция оптимизирует ввод данных пользователем (нужно указать type вводимого значения)
+ 
+ @param prompt промпт для вывода в консоль (подсказка для пользователя)
+ @return значение которе ввёл пользователь
+  */
+template <typename T>
+T input(std::string prompt) {
+    T inputted;
+    std::cout << prompt;
+    std::cin >> inputted;
+    return inputted;
+}
 
 /**
  Реализация Quick Sort из лекции
@@ -115,35 +128,40 @@ int getMinimumDifference(T array[], const int arraySize, const int k) {
 
 
 int main(int argc, const char * argv[]) {
-    /* Task1 */
+//    /* Task1 */
+//    
+//    // 1.1
+//    const float constFloat = 12.0;
+//    const float *const constPtrToConstFloat = &constFloat;
+//    
+//    // 1.2
+//    typedef long int *longIntPtr;
+//    
+//    // 1.3
+//    double *doublePtr = nullptr;
+//    
+//    // 1.4
+//    const short int shortInt = 1;
+//    const short int *ptrToConstShortInt = &shortInt;
+//    
+//    // 1.5
+//    using tdConstPtrToFloat = const float *const;
+//    tdConstPtrToFloat cptcf = &constFloat;
+//    
+//    // 1.6
+//    typedef char *const charConstPtr;
+//    
+//    // 1.7
+//    double *const constPtrToDouble = nullptr;
+//    
+//    // 1.8
+//    typedef unsigned int *const constIntPtr;
+
+    goNext();
     
-    // 1.1
-    const float constFloat = 12.0;
-    const float *const constPtrToConstFloat = &constFloat;
-    
-    // 1.2
-    typedef long int *longIntPtr;
-    
-    // 1.3
-    double *doublePtr = nullptr;
-    
-    // 1.4
-    const short int shortInt = 1;
-    const short int *ptrToConstShortInt = &shortInt;
-    
-    // 1.5
-    using tdConstPtrToFloat = const float *const;
-    tdConstPtrToFloat cptcf = &constFloat;
-    
-    // 1.6
-    typedef char *const charConstPtr;
-    
-    // 1.7
-    double *const constPtrToDouble = nullptr;
-    
-    // 1.8
-    typedef unsigned int *const constIntPtr;
-    
+    /* Task2 */
+    int size_for_2_task = input<int>("Введите размер массива: ");
+    double *ptr2arr_task2[size_for_2_task];
     
     goNext();
     
