@@ -9,7 +9,7 @@
  @param size размер массива
  */
 template <typename T>
-void qSort(T array[], int size) {
+void qSort(T array[], const int size) {
     //Указатели в начало и в конец массива
     int i = 0;
     int j = size - 1;
@@ -41,7 +41,7 @@ void qSort(T array[], int size) {
 
 
     // Если осталось, что сортировать
-    if(j > 0) {
+    if (j > 0) {
         // Левый кусок
         qSort(array, j + 1);
     }
@@ -61,7 +61,7 @@ void qSort(T array[], int size) {
  @param k число значения для разбиения/поиска
  */
 template <typename T>
-int getMinimumDifference(T array[], int arraySize, int k) {
+int getMinimumDifference(T array[], const int arraySize, const int k) {
     if (k == 1 || arraySize == 1) {
         return 0;  // так как array[i] - array[i] = 0
     }
@@ -95,10 +95,10 @@ int main(int argc, const char * argv[]) {
     
     /* Task6 */
     int arr_for_6_task[] = {2, 30, 4, 10, 0, 7};  // Введите свой массив
-    int k_for_6_task = 3; // Введите собственный k
+    const int k_for_6_task = 3; // Введите собственный k
     
-    int arr6_size = sizeof(arr_for_6_task) / sizeof(arr_for_6_task[0]);
-    int min_diff_6 = getMinimumDifference(arr_for_6_task, arr6_size, k_for_6_task);
+    const int arr6_size = sizeof(arr_for_6_task) / sizeof(arr_for_6_task[0]);
+    const int min_diff_6 = getMinimumDifference(arr_for_6_task, arr6_size, k_for_6_task);
     std::cout << "В задании №6 минимальная разница = " << min_diff_6 << std::endl;
     
     return 0;
