@@ -9,12 +9,12 @@ int score_of_done_tasks = 0;
  Также она может прервать процесс, если пользователь устал
  */
 void goNext() {
-    score_of_done_tasks += 1;
+    score_of_done_tasks++;
     std::string user_decision;
     
     std::cout << "\nTask №" << score_of_done_tasks << " is done, let's start №" << score_of_done_tasks+1 << "?\n";
     std::cout << "press ENTER to continue or write 'stop' to break process: ";
-    // std::getline(std::cin, user_decision);
+    // TODO: std::getline(std::cin, user_decision);
     
     if (user_decision == "stop") {
         std::cout << "Really? Ok, let's finish, I don't want to see you for now...\n";
@@ -119,7 +119,6 @@ void returnMemoryToKucha(double array[]) {
     array = nullptr;
 }
 
-
 /**
  Заполняет массив рандомными значениями
  
@@ -132,7 +131,6 @@ void fillArray(T array[], const int size) {
         array[i] = getRandomNumber(-999, 999);
     }
 }
-
 
 /**
  Выводит массив в консоль
@@ -160,6 +158,50 @@ void printArray(T array[], const int size, const std::string prompt, const std::
     std::cout << "\n";
 }
 
+/**
+ Меняет местами чётные и нечётные элементы целочисленного массива (сдвигает каждое значение на одно влево)
+ 
+ @param array целочисленный массив для перестановки
+ @param size размер массива
+ */
+void switchEvenAndOddNumbersInArray(int array[], const int size) {
+    for (int i = 0; i < size-1; ++i) {
+        // std::swap(array[i], array[i+1]);  // Простой вариант
+        array[i] = array[i] - array[i+1];
+        array[i+1] = array[i+1] + array[i];
+        array[i] = array[i+1] - array[i];
+    }
+}
+
+void fillTwoDimensionalArray(int *array[], const int rows, const int columns) {
+    for (int i = 0; i < rows; ++i) {
+        // fillArray(array[i], columns);  // Простой вариант
+        for (int j = 0; j < columns; ++j) {
+            array[i][j] = getRandomNumber(10, 50);
+        }
+    }
+}
+
+void printTwoDimensionalArray(int *array[], const int rows, const int columns) {
+    std::cout << "\nYour filled array:\n\n";
+    for (int i = 0; i < rows; ++i) {
+        // printArray(array[i], columns, "", ", ", false);  // Простой вариант
+        
+        std::cout << "|";
+        for (int j = 0; j < columns; ++j) {
+            std::cout << array[i][j] << "|";
+        }
+        if (i != rows-1) {
+            std::cout << "\n|";
+            int n = 0;
+            while (n < columns) {
+                std::cout << "--|";
+                n++;
+            }
+        }
+        std::cout << "\n";
+    }
+}
 
 /**
  Реализация для https://leetcode.com/problems/minimum-difference-between-highest-and-lowest-of-k-scores/
@@ -182,13 +224,13 @@ int getMinimumDifference(T array[], const int arraySize, const int k) {
         int act_num = i;
         for (int j = 0; j < k; ++j) {
             act_pair[j] = array[act_num];  // заполняем массив k числами
-            act_num += 1;
+            act_num++;
             if (act_num > arraySize-1) {
                 act_num = 0;
             }
         }
         for (int n = 0; n < k - 1; ++n) {  // ищем минимальную разницу в k
-            T act_diff = abs(act_pair[n + 1] - act_pair[n]);
+            T act_diff = abs(act_pair[n+1] - act_pair[n]);
             if (act_diff < min_dif) {
                 min_dif = act_diff;
             }
@@ -203,7 +245,7 @@ int main(int argc, const char * argv[]) {
     std::srand(static_cast<unsigned int>(time(nullptr)));  // Инициализация рандомайзера, помещение зерна (seed) должно происходить 1 раз за программу
     
 //    /* Task1 */
-//    
+//
 //    // 1.1
 //    const float constFloat = 12.0;
 //    const float *const constPtrToConstFloat = &constFloat;
@@ -230,6 +272,8 @@ int main(int argc, const char * argv[]) {
 //    
 //    // 1.8
 //    typedef unsigned int *const constIntPtr;
+//    
+//    /* End of task1 */
 
     goNext();
     
@@ -239,10 +283,53 @@ int main(int argc, const char * argv[]) {
     do {
         int size_for_2_task = input<int>("Write array size: ");
         ptr2arr_task2 = getMemoryFromKuchaForArray(size_for_2_task);
-        fillArray<double>(ptr2arr_task2, size_for_2_task);
+        fillArray(ptr2arr_task2, size_for_2_task);
         printArray(ptr2arr_task2, size_for_2_task, "Array in 2nd task looks like:", ", ", true);
         returnMemoryToKucha(ptr2arr_task2);
     } while (input<std::string>("\nPaste 'A' if you want to try it again or anything else to break: ") == "A");
+    /* End of task2 */
+    
+    goNext();
+    
+    /* Task3 */
+    int *ptr2arr_task3 = new int[12];
+    fillArray(ptr2arr_task3, 12);
+    printArray(ptr2arr_task3, 12, "Array in third task (before changes) looks like:", ", ", true);
+    
+    switchEvenAndOddNumbersInArray(ptr2arr_task3, 12);
+    
+    printArray(ptr2arr_task3, 12, "Array in third task (after changes) looks like:", ", ", true);
+    
+    delete[] ptr2arr_task3;
+    ptr2arr_task3 = nullptr;
+    /* End of task3 */
+    
+    goNext();
+    
+    /* Task4 */
+    const int score_array_rows_task4 = input<int>("Write num of rows in array: ");
+    const int score_array_columns_task4 = input<int>("Write num of columns in array: ");
+    
+    int **ptr2arr_task4 = new int*[score_array_rows_task4];
+    for (int i = 0; i < score_array_rows_task4; ++i) {
+        ptr2arr_task4[i] = new int[score_array_columns_task4];
+    }
+    
+    fillTwoDimensionalArray(ptr2arr_task4, score_array_rows_task4, score_array_columns_task4);
+    printTwoDimensionalArray(ptr2arr_task4, score_array_rows_task4, score_array_columns_task4);
+    
+    for (int i = 0; i < score_array_rows_task4; ++i) {
+        delete[] ptr2arr_task4[i];
+        ptr2arr_task4[i] = nullptr;
+    }
+    delete[] ptr2arr_task4;
+    ptr2arr_task4 = nullptr;
+    /* End of task4 */
+    
+    goNext();
+    
+    /* Task5 */
+    /* End of task5 */
     
     goNext();
     
@@ -253,8 +340,24 @@ int main(int argc, const char * argv[]) {
     const int arr6_size = sizeof(arr_for_6_task) / sizeof(arr_for_6_task[0]);
     const int min_diff_6 = getMinimumDifference(arr_for_6_task, arr6_size, k_for_6_task);
     std::cout << "Min diff = " << min_diff_6 << std::endl;
+    /* End of task6 */
     
     goNext();
+    
+    /* Task7 */
+    /* End of task7 */
+    
+    goNext();
+    
+    /* Task8 */
+    /* End of task8 */
+    
+    goNext();
+    
+    /* Finish */
+    
+    score_of_done_tasks++;
+    std::cout << "\n\nTask №" << score_of_done_tasks << " is done, so that is all, thank you, all the best!\n";
     
     return 0;
 }
