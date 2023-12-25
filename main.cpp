@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 
 
 /**
@@ -13,24 +14,23 @@ void qSort(T array[], int size) {
     int i = 0;
     int j = size - 1;
 
-    //Центральный элемент массива
-    int mid = array[size / 2];
+    // Центральный элемент массива
+    T mid = array[size/2];
 
-    //Делим массив
     do {
-        //Пробегаем элементы, ищем те, которые нужно перекинуть в другую часть
-        //В левой части массива пропускаем(оставляем на месте) элементы, которые меньше центрального
-        while(array[i] < mid) {
+        // Перебираем элементы, ищем те, которые нужно перекинуть в другую часть
+        // В левой части массива пропускаем (оставляем на месте) элементы, которые меньше центрального
+        while (array[i] < mid) {
             i++;
         }
-        //В правой части пропускаем элементы, которые больше центрального
-        while(array[j] > mid) {
+        // В правой части пропускаем (оставляем на месте) элементы, которые больше центрального
+        while (array[j] > mid) {
             j--;
         }
 
-        //Меняем элементы местами
+        // Меняем элементы местами
         if (i <= j) {
-            int tmp = array[i];
+            T tmp = array[i];
             array[i] = array[j];
             array[j] = tmp;
 
@@ -40,16 +40,17 @@ void qSort(T array[], int size) {
     } while (i <= j);
 
 
-    //Рекурсивные вызовы, если осталось, что сортировать
+    // Если осталось, что сортировать
     if(j > 0) {
-        //"Левый кусок"
+        // Левый кусок
         qSort(array, j + 1);
     }
     if (i < size) {
-        //"Првый кусок"
+        // Правый кусок
         qSort(&array[i], size - i);
     }
 }
+
 
 
 /**
@@ -61,11 +62,29 @@ void qSort(T array[], int size) {
  */
 template <typename T>
 int getMinimumDifference(T array[], int arraySize, int k) {
+    if (k == 1 || arraySize == 1) {
+        return 0;  // так как array[i] - array[i] = 0
+    }
+    
     qSort(array, arraySize);
-    int min_dif;
+    T min_dif = abs(array[0] - array[1]);
+    T act_pair[k];  // храним числа k
     
     for (int i = 0; i < arraySize; ++i) {
-        
+        int act_num = i;
+        for (int j = 0; j < k; ++j) {
+            act_pair[j] = array[act_num];  // заполняем массив k числами
+            act_num += 1;
+            if (act_num > arraySize-1) {
+                act_num = 0;
+            }
+        }
+        for (int n = 0; n < k - 1; ++n) {  // ищем минимальную разницу в k
+            T act_diff = abs(act_pair[n + 1] - act_pair[n]);
+            if (act_diff < min_dif) {
+                min_dif = act_diff;
+            }
+        }
     }
     
     return min_dif;
@@ -75,12 +94,12 @@ int getMinimumDifference(T array[], int arraySize, int k) {
 int main(int argc, const char * argv[]) {
     
     /* Task6 */
-    int arr_for_6_task[] = {2, 3, 1, 10, 0};  // Введите свой массив
-    int k_for_6_task = 2; // Введите собственный k
+    int arr_for_6_task[] = {2, 30, 4, 10, 0, 7};  // Введите свой массив
+    int k_for_6_task = 3; // Введите собственный k
     
-    int arr6_size = sizeof(my_arr) / sizeof(my_arr[0]);
-    int a = getMinimumDifference(arr_for_6_task, arr6_size, k_for_6_task);
-    std::cout << a << "\n";
+    int arr6_size = sizeof(arr_for_6_task) / sizeof(arr_for_6_task[0]);
+    int min_diff_6 = getMinimumDifference(arr_for_6_task, arr6_size, k_for_6_task);
+    std::cout << "В задании №6 минимальная разница = " << min_diff_6 << std::endl;
     
     return 0;
 }
