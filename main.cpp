@@ -31,7 +31,7 @@ void goNext() {
  @return значение которе ввёл пользователь
   */
 template <typename T>
-T input(std::string prompt) {
+T input(const std::string prompt) {
     T inputted;
     std::cout << prompt;
     std::cin >> inputted;
@@ -87,6 +87,78 @@ void qSort(T array[], const int size) {
     }
 }
 
+/**
+ Создаёт рандомное целочисленное число в заданном диапазоне
+ 
+ @param min нижняя граница для выбора
+ @param max верхняя граница для выбора
+ @return рандомное целочисленное число
+ */
+int getRandomNumber(const int min, const int max){
+    int random_result = min + std::rand() % max;
+    return random_result;
+}
+
+/**
+ Выделяет память для массива из кучи
+ 
+ @param arraySize размер массива (число ячеек памяти для выделения)
+ @return адрес первой ячейки выделенной памяти
+ */
+double* getMemoryFromKuchaForArray(const int arraySize) {
+    return new double[arraySize];
+}
+
+/**
+ Возращает память массива куче
+ 
+ @param array массив  (адрес первой ячейки памяти для возврата)
+ */
+void returnMemoryToKucha(double array[]) {
+    delete[] array;
+    array = nullptr;
+}
+
+
+/**
+ Заполняет массив рандомными значениями
+ 
+ @param array целочисленный массив для заполнения
+ @param size размер массива
+ */
+template <typename T>
+void fillArray(T array[], const int size) {
+    for (int i = 0; i < size; ++i) {
+        array[i] = getRandomNumber(-999, 999);
+    }
+}
+
+
+/**
+ Выводит массив в консоль
+ 
+ @param array целочисленный массив для вывода
+ @param size размер массива
+ @param prompt строчка для вывода перед массивом
+ @param sep чем разделить значения массива
+ @param print_with_brackets вывести с квадратнами скобками
+ */
+template <typename T>
+void printArray(T array[], const int size, const std::string prompt, const std::string sep, const bool print_with_brackets) {
+    std::cout << prompt << std::endl;
+    
+    if (print_with_brackets) {
+        std::cout << "[";
+    }
+    for (int i = 0; i < size; ++i) {
+        std::cout << array[i] << sep;
+    }
+    if (print_with_brackets) {
+        std::cout << "\b\b]";
+    }
+    
+    std::cout << "\n";
+}
 
 
 /**
@@ -128,6 +200,8 @@ int getMinimumDifference(T array[], const int arraySize, const int k) {
 
 
 int main(int argc, const char * argv[]) {
+    std::srand(static_cast<unsigned int>(time(nullptr)));  // Инициализация рандомайзера, помещение зерна (seed) должно происходить 1 раз за программу
+    
 //    /* Task1 */
 //    
 //    // 1.1
@@ -160,8 +234,15 @@ int main(int argc, const char * argv[]) {
     goNext();
     
     /* Task2 */
-    int size_for_2_task = input<int>("Введите размер массива: ");
-    double *ptr2arr_task2[size_for_2_task];
+    double *ptr2arr_task2;
+    
+    do {
+        int size_for_2_task = input<int>("Write array size: ");
+        ptr2arr_task2 = getMemoryFromKuchaForArray(size_for_2_task);
+        fillArray<double>(ptr2arr_task2, size_for_2_task);
+        printArray(ptr2arr_task2, size_for_2_task, "Array in 2nd task looks like:", ", ", true);
+        returnMemoryToKucha(ptr2arr_task2);
+    } while (input<std::string>("\nPaste 'A' if you want to try it again or anything else to break: ") == "A");
     
     goNext();
     
