@@ -2,6 +2,29 @@
 #include <cstdlib>
 
 
+int score_of_done_tasks = 0;
+/**
+ Функция разделения номеров заданий для main()
+ Также она может прервать процесс, если пользователь устал
+ */
+void goNext() {
+    score_of_done_tasks += 1;
+    std::string user_decision;
+    
+    std::cout << "\nTask №" << score_of_done_tasks << " is done, let's start №" << score_of_done_tasks+1 << "?\n";
+    std::cout << "press ENTER to continue or write 'stop' to break process: ";
+    std::getline(std::cin, user_decision);
+    std::getline(std::cin, user_decision);
+    
+    if (user_decision == "stop") {
+        std::cout << "Really? Ok, let's finish, I don't want to see you for now...\n";
+        exit(0);
+    }
+    
+    std::cout << "\n\n";
+}
+
+
 /**
  Реализация Quick Sort из лекции
  
@@ -92,6 +115,37 @@ int getMinimumDifference(T array[], const int arraySize, const int k) {
 
 
 int main(int argc, const char * argv[]) {
+    /* Task1 */
+    
+    // 1.1
+    const float constFloat = 12.0;
+    const float *const constPtrToConstFloat = &constFloat;
+    
+    // 1.2
+    typedef long int *longIntPtr;
+    
+    // 1.3
+    double *doublePtr = nullptr;
+    
+    // 1.4
+    const short int shortInt = 1;
+    const short int *ptrToConstShortInt = &shortInt;
+    
+    // 1.5
+    using tdConstPtrToFloat = const float *const;
+    tdConstPtrToFloat cptcf = &constFloat;
+    
+    // 1.6
+    typedef char *const charConstPtr;
+    
+    // 1.7
+    double *const constPtrToDouble = nullptr;
+    
+    // 1.8
+    typedef unsigned int *const constIntPtr;
+    
+    
+    goNext();
     
     /* Task6 */
     int arr_for_6_task[] = {2, 30, 4, 10, 0, 7};  // Введите свой массив
@@ -99,7 +153,9 @@ int main(int argc, const char * argv[]) {
     
     const int arr6_size = sizeof(arr_for_6_task) / sizeof(arr_for_6_task[0]);
     const int min_diff_6 = getMinimumDifference(arr_for_6_task, arr6_size, k_for_6_task);
-    std::cout << "В задании №6 минимальная разница = " << min_diff_6 << std::endl;
+    std::cout << "Min diff = " << min_diff_6 << std::endl;
+    
+    goNext();
     
     return 0;
 }
