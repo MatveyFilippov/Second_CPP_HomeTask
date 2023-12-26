@@ -141,4 +141,4 @@ Program ended with exit code: 0
 
 Или скопируйте [`main.cpp`](https://github.com/MatveyFilippov/Second_CPP_HomeTask/blob/main/main.cpp "файл с кодом дз") и запустите на своей машине
 ***
-###### Выполнено и загружено: 2023-12-25
+###### Выполнено и загружено: 2023-12-26
