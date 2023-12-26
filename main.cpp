@@ -32,7 +32,7 @@ void goNext() {
   */
 template <typename T>
 T input(const std::string prompt) {
-    T inputted = 0.0;
+    T inputted(0.0);
     std::cout << prompt;
     std::cin >> inputted;
     return inputted;
@@ -231,6 +231,67 @@ void printTwoDimensionalArray(int **array, const int rows, const int columns) {
     }
 }
 
+
+/**
+ Сложение 2-х чисел
+ 
+ @param a первое число
+ @param b второе число
+ @return сумму a и b
+ */
+template <typename T>
+T add(T a, T b) {
+    return a + b;
+}
+
+/**
+ Вычетание 2-х чисел
+ 
+ @param a первое число
+ @param b второе число
+ @return разницу a и b
+ */
+template <typename T>
+T subtract(T a, T b) {
+    return a - b;
+}
+
+/**
+ Умножение 2-х чисел
+ 
+ @param a первое число
+ @param b второе число
+ @return произведение a и b
+ */
+template <typename T>
+T multiply(T a, T b) {
+    return a * b;
+}
+
+/**
+ Деление 2-х чисел
+ 
+ @param a первое число
+ @param b второе число
+ @return частное a и b
+ */
+template <typename T>
+T divide(T a, T b) {
+    return a / b;
+}
+
+/**
+ Выполняет подсчёт примера через запуск функции по указателю
+ 
+ @param a первое число
+ @param b второе число
+ @param def2run функция для выполнения
+ @return результат вычислений
+ */
+float runDefByPtr(float a, float b, float (*def2run)(float, float)) {
+    return def2run(a, b);
+}
+
 /**
  Реализация для https://leetcode.com/problems/minimum-difference-between-highest-and-lowest-of-k-scores/
  
@@ -301,36 +362,36 @@ int getLuckyNum(int array[], const int size) {
 int main(int argc, const char * argv[]) {
     std::srand(static_cast<unsigned int>(time(nullptr)));  // Инициализация рандомайзера, помещение зерна (seed) должно происходить 1 раз за программу
     
-//    /* Task1 */
-//
-//    // 1.1
-//    const float constFloat = 12.0;
-//    const float *const constPtrToConstFloat = &constFloat;
-//    
-//    // 1.2
-//    typedef long int *longIntPtr;
-//    
-//    // 1.3
-//    double *doublePtr = nullptr;
-//    
-//    // 1.4
-//    const short int shortInt = 1;
-//    const short int *ptrToConstShortInt = &shortInt;
-//    
-//    // 1.5
-//    using tdConstPtrToFloat = const float *const;
-//    tdConstPtrToFloat cptcf = &constFloat;
-//    
-//    // 1.6
-//    typedef char *const charConstPtr;
-//    
-//    // 1.7
-//    double *const constPtrToDouble = nullptr;
-//    
-//    // 1.8
-//    typedef unsigned int *const constIntPtr;
-//    
-//    /* End of task1 */
+    /* Task1 */
+
+    // 1.1
+    const float constFloat = 12.0;
+    const float *const constPtrToConstFloat = &constFloat;
+    
+    // 1.2
+    typedef long int *longIntPtr;
+    
+    // 1.3
+    double *doublePtr = nullptr;
+    
+    // 1.4
+    const short int shortInt = 1;
+    const short int *ptrToConstShortInt = &shortInt;
+    
+    // 1.5
+    using tdConstPtrToFloat = const float *const;
+    tdConstPtrToFloat cptcf = &constFloat;
+    
+    // 1.6
+    typedef char *const charConstPtr;
+    
+    // 1.7
+    double *const constPtrToDouble = nullptr;
+    
+    // 1.8
+    typedef unsigned int *const constIntPtr;
+    
+    /* End of task1 */
 
     goNext();
     
@@ -386,6 +447,33 @@ int main(int argc, const char * argv[]) {
     goNext();
     
     /* Task5 */
+    // Честно говоря, мы вообще не поняли что требуется в этой задаче
+    // Реализовали что-то похожее на описание
+    float (*ptr2def_task5)(float, float);
+    float a_task5 = input<float>("Write 'a' num: ");
+    char sign_task5 = input<char>("Put sign (+, -, *, /): ");
+    float b_task5 = input<float>("Write 'b' num: ");
+    
+    switch (sign_task5) {
+        case '+':
+            ptr2def_task5 = add;
+            break;
+        case '-':
+            ptr2def_task5 = subtract;
+            break;
+        case '*':
+            ptr2def_task5 = multiply;
+            break;
+        case '/':
+            ptr2def_task5 = divide;
+            break;
+        default:
+            std::cout << "I don't know such sign '" << sign_task5 << "'\n";
+            return -1;
+    }
+    
+    float result_task5 = runDefByPtr(a_task5, b_task5, ptr2def_task5);
+    std::cout << a_task5 << " " << sign_task5 << " " << b_task5 << " = " << result_task5 << std::endl;
     /* End of task5 */
     
     goNext();

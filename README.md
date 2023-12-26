@@ -13,6 +13,17 @@
 ## Примеры взаимодействия (terminal's shots):
 ```
 some data from terminal...
+Program ended with exit code: 0
+```
+&
+```
+some data from terminal...
+Program ended with exit code: 0
+```
+&
+```
+some data from terminal...
+Program ended with exit code: 0
 ```
 Если вы хотите получить больше примеров, то можете попросить любого из раздела `Ученики, писавшие код` и мы обязательно пришлём)
 
