@@ -28,11 +28,24 @@ void goNext() {
  Функция оптимизирует ввод данных пользователем (нужно указать type вводимого значения)
  
  @param prompt промпт для вывода в консоль (подсказка для пользователя)
- @return значение которе ввёл пользователь
+ @return значение которое ввёл пользователь
   */
 template <typename T>
 T input(const std::string prompt) {
-    T inputted;
+    T inputted = 0.0;
+    std::cout << prompt;
+    std::cin >> inputted;
+    return inputted;
+}
+
+/**
+ Функция оптимизирует печать  пользователя
+ 
+ @param prompt промпт для вывода в консоль (подсказка для пользователя)
+ @return строчка которую ввёл пользователь
+  */
+std::string inputString(const std::string prompt) {
+    std::string inputted = "";
     std::cout << prompt;
     std::cin >> inputted;
     return inputted;
@@ -173,16 +186,31 @@ void switchEvenAndOddNumbersInArray(int array[], const int size) {
     }
 }
 
-void fillTwoDimensionalArray(int *array[], const int rows, const int columns) {
+/**
+ Заполняет двумерный целочисленный массив значениями от 10 до 50
+ 
+ @param array двумерный целочисленный массив для заполнения
+ @param rows кол-во строк в двумерном массиве
+ @param columns кол-во столбцов в двумерном массиве
+ */
+void fillTwoDimensionalArray(int **array, const int rows, const int columns) {
     for (int i = 0; i < rows; ++i) {
         // fillArray(array[i], columns);  // Простой вариант
+        
         for (int j = 0; j < columns; ++j) {
             array[i][j] = getRandomNumber(10, 50);
         }
     }
 }
 
-void printTwoDimensionalArray(int *array[], const int rows, const int columns) {
+/**
+ Выводит в консоль двумерный целочисленный массив
+ 
+ @param array двумерный целочисленный массив для выводв
+ @param rows кол-во строк в двумерном массиве
+ @param columns кол-во столбцов в двумерном массиве
+ */
+void printTwoDimensionalArray(int **array, const int rows, const int columns) {
     std::cout << "\nYour filled array:\n\n";
     for (int i = 0; i < rows; ++i) {
         // printArray(array[i], columns, "", ", ", false);  // Простой вариант
@@ -211,7 +239,7 @@ void printTwoDimensionalArray(int *array[], const int rows, const int columns) {
  @param k число значения для разбиения/поиска
  */
 template <typename T>
-int getMinimumDifference(T array[], const int arraySize, const int k) {
+T getMinimumDifference(T array[], const int arraySize, const int k) {
     if (k == 1 || arraySize == 1) {
         return 0;  // так как array[i] - array[i] = 0
     }
@@ -238,6 +266,35 @@ int getMinimumDifference(T array[], const int arraySize, const int k) {
     }
     
     return min_dif;
+}
+
+/**
+ Реализация для https://leetcode.com/problems/find-lucky-integer-in-an-array/
+ 
+ @param array массив для поиска
+ @param size размер массива
+ @return счастливое число (кол-во повторений в массиве == числу)
+ */
+int getLuckyNum(int array[], const int size) {
+    qSort(array, size);
+    int lucky_num = -1;
+    int score = 1;
+    
+    for (int i = 0; i < size-1; ++i) {
+        if (array[i] == array[i+1]) {
+            score++;
+        } else {
+            if (score == array[i]) {
+                lucky_num = array[i];
+            }
+            score = 1;
+        }
+    }
+    if (score == array[size-1]) {
+        lucky_num = array[size-1];
+    }
+    
+    return lucky_num;
 }
 
 
@@ -286,7 +343,7 @@ int main(int argc, const char * argv[]) {
         fillArray(ptr2arr_task2, size_for_2_task);
         printArray(ptr2arr_task2, size_for_2_task, "Array in 2nd task looks like:", ", ", true);
         returnMemoryToKucha(ptr2arr_task2);
-    } while (input<std::string>("\nPaste 'A' if you want to try it again or anything else to break: ") == "A");
+    } while (inputString("\nPaste 'A' if you want to try it again or anything else to break: ") == "A");
     /* End of task2 */
     
     goNext();
@@ -307,8 +364,8 @@ int main(int argc, const char * argv[]) {
     goNext();
     
     /* Task4 */
-    const int score_array_rows_task4 = input<int>("Write num of rows in array: ");
-    const int score_array_columns_task4 = input<int>("Write num of columns in array: ");
+    int score_array_rows_task4 = input<int>("Write num of rows in array: ");
+    int score_array_columns_task4 = input<int>("Write num of columns in array: ");
     
     int **ptr2arr_task4 = new int*[score_array_rows_task4];
     for (int i = 0; i < score_array_rows_task4; ++i) {
@@ -334,17 +391,26 @@ int main(int argc, const char * argv[]) {
     goNext();
     
     /* Task6 */
-    int arr_for_6_task[] = {2, 30, 4, 10, 0, 7};  // Введите свой массив
-    const int k_for_6_task = 3; // Введите собственный k
-    
-    const int arr6_size = sizeof(arr_for_6_task) / sizeof(arr_for_6_task[0]);
-    const int min_diff_6 = getMinimumDifference(arr_for_6_task, arr6_size, k_for_6_task);
+    int arr_for_task6[] = {2, 30, 4, 10, 0, 7};  // Введите свой массив
+    const int k_for_task6 = 3; // Введите собственный k
+
+    const int arr6_size = sizeof(arr_for_task6) / sizeof(arr_for_task6[0]);
+    const int min_diff_6 = getMinimumDifference(arr_for_task6, arr6_size, k_for_task6);
     std::cout << "Min diff = " << min_diff_6 << std::endl;
     /* End of task6 */
     
     goNext();
     
     /* Task7 */
+    int arr_for_task7[] = {1, 2, 2, 3, 3, 4, 4, 4, 4, 4, 6, 3};  // Введите свой массив
+    
+    const int arr7_size = sizeof(arr_for_task7) / sizeof(arr_for_task7[0]);
+    int lucky_num_7 = getLuckyNum(arr_for_task7, arr7_size);
+    if (lucky_num_7 == -1) {
+        std::cout << "Here no lucky num" << std::endl;
+    } else {
+        std::cout << "Lycky num is " << lucky_num_7 << std::endl;
+    }
     /* End of task7 */
     
     goNext();
