@@ -231,7 +231,6 @@ void printTwoDimensionalArray(int **array, const int rows, const int columns) {
     }
 }
 
-
 /**
  Сложение 2-х чисел
  
@@ -356,6 +355,36 @@ int getLuckyNum(int array[], const int size) {
     }
     
     return lucky_num;
+}
+
+/**
+ Реализация для https://leetcode.com/problems/majority-element/
+ 
+ @param array массив для поиска
+ @param size размер массива
+ @return мажорный элемент (кол-во повторений в массиве > size/2)
+ */
+int getMajorityElement(int array[], const int size) {
+    qSort(array, size);
+    int maj_num = -1;
+    int score = 1;
+    int half = size / 2;
+    
+    for (int i = 0; i < size-1; ++i) {
+        if (i > half && score == 1) {
+            return maj_num;
+        }
+        if (array[i] == array[i+1]) {
+            score++;
+            if (score > half) {
+                maj_num = array[i];
+            }
+        } else {
+            score = 1;
+        }
+    }
+    
+    return maj_num;
 }
 
 
@@ -504,12 +533,18 @@ int main(int argc, const char * argv[]) {
     goNext();
     
     /* Task8 */
+    int arr_for_task8[] = {3, 2, 3};  // Введите свой массив
+    
+    const int arr8_size = sizeof(arr_for_task8) / sizeof(arr_for_task8[0]);
+    int maj_num_8 = getMajorityElement(arr_for_task8, arr8_size);
+    if (maj_num_8 == -1) {
+        std::cout << "Here no major num" << std::endl;
+    } else {
+        std::cout << "Majority num is " << maj_num_8 << std::endl;
+    }
     /* End of task8 */
     
-    goNext();
-    
     /* Finish */
-    
     score_of_done_tasks++;
     std::cout << "\n\nTask №" << score_of_done_tasks << " is done, so that is all, thank you, all the best!\n";
     
