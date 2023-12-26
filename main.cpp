@@ -14,7 +14,7 @@ void goNext() {
     
     std::cout << "\nTask №" << score_of_done_tasks << " is done, let's start №" << score_of_done_tasks+1 << "?\n";
     std::cout << "press ENTER to continue or write 'stop' to break process: ";
-    // TODO: std::getline(std::cin, user_decision);
+    std::getline(std::cin, user_decision);
     
     if (user_decision == "stop") {
         std::cout << "Really? Ok, let's finish, I don't want to see you for now...\n";
@@ -59,7 +59,7 @@ std::string inputString(const std::string prompt) {
  */
 template <typename T>
 void qSort(T array[], const int size) {
-    //Указатели в начало и в конец массива
+    // Указатели в начало и в конец массива
     int i = 0;
     int j = size - 1;
 
@@ -180,6 +180,7 @@ void printArray(T array[], const int size, const std::string prompt, const std::
 void switchEvenAndOddNumbersInArray(int array[], const int size) {
     for (int i = 0; i < size-1; ++i) {
         // std::swap(array[i], array[i+1]);  // Простой вариант
+        
         array[i] = array[i] - array[i+1];
         array[i+1] = array[i+1] + array[i];
         array[i] = array[i+1] - array[i];
@@ -513,7 +514,11 @@ int main(int argc, const char * argv[]) {
 
     const int arr6_size = sizeof(arr_for_task6) / sizeof(arr_for_task6[0]);
     const int min_diff_6 = getMinimumDifference(arr_for_task6, arr6_size, k_for_task6);
-    std::cout << "Min diff = " << min_diff_6 << std::endl;
+    std::cout << "k = " << k_for_task6 << " & array is [";
+    for (auto item : arr_for_task6) {
+        std::cout << item << " ";
+    }
+    std::cout << "\b]\n-> Min diff = " << min_diff_6 << std::endl;
     /* End of task6 */
     
     goNext();
@@ -523,10 +528,14 @@ int main(int argc, const char * argv[]) {
     
     const int arr7_size = sizeof(arr_for_task7) / sizeof(arr_for_task7[0]);
     int lucky_num_7 = getLuckyNum(arr_for_task7, arr7_size);
+    std::cout <<"In array [";
+    for (auto item : arr_for_task6) {
+        std::cout << item << " ";
+    }
     if (lucky_num_7 == -1) {
-        std::cout << "Here no lucky num" << std::endl;
+        std::cout << "\b] no lucky num" << std::endl;
     } else {
-        std::cout << "Lycky num is " << lucky_num_7 << std::endl;
+        std::cout << "\b] lycky num is " << lucky_num_7 << std::endl;
     }
     /* End of task7 */
     
@@ -537,10 +546,14 @@ int main(int argc, const char * argv[]) {
     
     const int arr8_size = sizeof(arr_for_task8) / sizeof(arr_for_task8[0]);
     int maj_num_8 = getMajorityElement(arr_for_task8, arr8_size);
+    std::cout <<"Array = [";
+    for (auto item : arr_for_task6) {
+        std::cout << item << " ";
+    }
     if (maj_num_8 == -1) {
-        std::cout << "Here no major num" << std::endl;
+        std::cout << "\b] and here no major num" << std::endl;
     } else {
-        std::cout << "Majority num is " << maj_num_8 << std::endl;
+        std::cout << "\b] and majority num is " << maj_num_8 << std::endl;
     }
     /* End of task8 */
     
